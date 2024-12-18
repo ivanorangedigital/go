@@ -1,0 +1,28 @@
+<!-- call base layout -->
+{{template "base" .}}
+
+{{define "title"}}
+Home
+{{end}}
+
+{{define "description"}}
+Sono la meta description
+{{end}}
+
+{{define "head"}}
+<link rel="preload" as="style" href="/css/default-header.css" />
+<link rel="stylesheet" href="/css/default-header.css" />
+{{end}}
+
+{{define "body"}}
+<div class="container">
+	<h1>Funziona tutto molto si, ok, okok</h1>
+	<p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Voluptatem, iste reprehenderit quo quae repellendus
+		accusamus sit culpa, ratione dolore, exercitationem odit facilis nostrum illo doloribus ut cupiditate consectetur.
+		Unde, recusandae!</p>
+</div>
+{{end}}
+
+{{define "scripts"}}
+<script src="/js/index.js"></script>
+{{end}}

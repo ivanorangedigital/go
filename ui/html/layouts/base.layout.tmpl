@@ -1,0 +1,74 @@
+{{define "base"}}
+<!doctype html>
+<html lang="it">
+
+<head>
+	<meta charset="UTF-8" />
+	<meta name="viewport" content="width=device-width, initial-scale=1" />
+	<title>{{template "title" .}} - OrangeBud WebStore</title>
+	<meta name="description" content={{template "description" .}} />
+	<style>
+		:root {
+			--primary: #ff6600;
+			--space-x: clamp(24px, 5vw, 48px);
+			--space-y: clamp(12px, 5vw, 24px);
+			--space-between: clamp(8px, 5vw, 16px);
+		}
+
+		*,
+		*::after,
+		*::before {
+			margin: 0;
+			padding: 0;
+			box-sizing: border-box;
+		}
+
+		html,
+		body {
+			height: 100%;
+		}
+
+		h1 {
+			font-size: clamp(2rem, 5vw, 2.5rem);
+		}
+
+		body {
+			font-size: clamp(14px, 5vw, 18px);
+		}
+
+		ul {
+			list-style: none;
+		}
+
+		.container {
+			--_space-x: calc(var(--space-x) / 2);
+			--_space-y: calc(var(--space-y) / 2);
+
+			max-width: 1200px;
+			margin: 0 auto;
+			padding: var(--_space-y) var(--_space-x);
+		}
+	</style>
+	{{block "head" .}}{{end}}
+</head>
+
+<body>
+	<!-- default-header if no header provided -->
+	{{block "header" .}}
+	{{template "default-header" .}}
+	{{end}}
+
+	<!-- body required -->
+	{{template "body" .}}
+
+	<!-- default-footer if no footer provided -->
+	{{block "footer" .}}
+	{{template "default-footer" .}}
+	{{end}}
+
+	<!-- scripts section (optional) -->
+	{{block "scripts" .}}{{end}}
+</body>
+
+</html>
+{{end}}

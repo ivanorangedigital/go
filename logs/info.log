@@ -1,0 +1,84 @@
+INFO 2024/11/23 19:28:47 Server starting on port 3000
+
+-- -- -- -- -- -- -- -- --
+
+INFO 2024/11/23 19:28:54 Request GET incoming to /
+INFO 2024/11/23 19:28:54 Execution time for GET to /: 303.5µs
+
+-- -- -- -- -- -- -- -- -- --
+
+INFO 2024/11/23 19:28:56 Request GET incoming to /auth
+INFO 2024/11/23 19:28:56 Execution time for GET to /auth: 102.208µs
+
+-- -- -- -- -- -- -- -- -- --
+
+INFO 2024/11/23 19:28:56 Request GET incoming to /auth/
+INFO 2024/11/23 19:28:56 Execution time for GET to /auth/: 48.625µs
+
+-- -- -- -- -- -- -- -- -- --
+
+INFO 2024/11/23 19:28:58 Request GET incoming to /auth/user
+INFO 2024/11/23 19:28:58 Authentication start
+INFO 2024/11/23 19:28:58 Authentication failed
+INFO 2024/11/23 19:28:58 Execution time for GET to /auth/user: 195.584µs
+
+-- -- -- -- -- -- -- -- -- --
+
+INFO 2024/11/23 19:30:03 Request GET incoming to /auth
+INFO 2024/11/23 19:30:03 Execution time for GET to /auth: 113.167µs
+
+-- -- -- -- -- -- -- -- -- --
+
+INFO 2024/11/23 19:30:03 Request GET incoming to /auth/
+INFO 2024/11/23 19:30:03 Execution time for GET to /auth/: 45.791µs
+
+-- -- -- -- -- -- -- -- -- --
+
+INFO 2024/11/23 19:44:10 Request GET incoming to /
+INFO 2024/11/23 19:44:10 Execution time for GET to /: 1.147417ms
+
+-- -- -- -- -- -- -- -- -- --
+
+INFO 2024/11/23 19:44:13 Request GET incoming to /ciao
+INFO 2024/11/23 19:44:13 Execution time for GET to /ciao: 100.083µs
+
+-- -- -- -- -- -- -- -- -- --
+
+INFO 2024/11/23 19:44:23 Request GET incoming to /
+INFO 2024/11/23 19:44:23 Execution time for GET to /: 86.375µs
+
+-- -- -- -- -- -- -- -- -- --
+
+INFO 2024/11/23 19:46:43 Request GET incoming to /hhkj
+INFO 2024/11/23 19:46:43 Execution time for GET to /hhkj: 111.792µs
+
+-- -- -- -- -- -- -- -- -- --
+
+INFO 2024/11/23 19:47:10 Request GET incoming to /
+INFO 2024/11/23 19:47:10 Execution time for GET to /: 103.542µs
+
+-- -- -- -- -- -- -- -- -- --
+
+INFO 2024/11/23 19:47:11 Request GET incoming to /
+INFO 2024/11/23 19:47:11 Execution time for GET to /: 109.958µs
+
+-- -- -- -- -- -- -- -- -- --
+
+INFO 2024/11/23 19:51:12 Request GET incoming to /jj
+INFO 2024/11/23 19:51:12 Execution time for GET to /jj: 98.084µs
+
+-- -- -- -- -- -- -- -- -- --
+
+INFO 2024/11/23 19:55:13 Server starting on port 3000
+
+-- -- -- -- -- -- -- -- --
+
+INFO 2024/11/23 19:55:16 Request GET incoming to /jj
+INFO 2024/11/23 19:55:16 Execution time for GET to /jj: 152.708µs
+
+-- -- -- -- -- -- -- -- -- --
+
+INFO 2024/11/23 19:56:06 Server starting on port 3000
+
+-- -- -- -- -- -- -- -- --
+

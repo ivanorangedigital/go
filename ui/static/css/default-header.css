@@ -1,0 +1,16 @@
+header {
+  position: relative;
+  background-color: var(--primary);
+  color: white;
+  & > .container {
+    display: flex;
+    justify-content: space-between;
+    align-content: center;
+    & > nav > ul {
+      display: flex;
+      & > * + * {
+        margin-left: var(--space-between);
+      }
+    }
+  }
+}
