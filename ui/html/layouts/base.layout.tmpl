@@ -49,6 +49,14 @@
 			padding: var(--_space-y) var(--_space-x);
 		}
 	</style>
+
+	<!-- for reset this section call [[define "reset-default-head" .]][[""]][[end]] (user double {} instead) -->
+	{{block "reset-default-head" .}}
+	<link rel="preload" as="style" href="/css/default-header.css" />
+	<link rel="stylesheet" href="/css/default-header.css" />
+	{{end}}
+
+	<!-- head section (optionally) -->
 	{{block "head" .}}{{end}}
 </head>
 
@@ -69,7 +77,7 @@
 	<!-- scripts section (optional) -->
 	{{block "scripts" .}}{{end}}
 
-	<!-- dev only -->
+	<!-- only for dev purposes -->
 	<script src="/js/dev-watch.js"></script>
 </body>
 

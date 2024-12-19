@@ -33,6 +33,12 @@ func newTemplateCache(dir string) (map[string]*template.Template, error) {
 			return nil, err
 		}
 
+		// page reparsing to force replace default value of blocks placed inside layout
+		ts, err = ts.ParseFiles(page)
+		if err != nil {
+			return nil, err
+		}
+
 		cache[name] = ts
 	}
 
