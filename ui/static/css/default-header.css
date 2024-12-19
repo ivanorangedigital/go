@@ -1,5 +1,4 @@
 header {
-  position: relative;
   background-color: var(--primary);
   color: white;
   & > .container {

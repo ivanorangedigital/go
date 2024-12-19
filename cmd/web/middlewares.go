@@ -64,7 +64,7 @@ func (app *application) loggerMiddleware(next http.Handler) http.Handler {
 
 		// calc total time
 		duration := time.Since(start)
-		app.infoLog.Printf("Execution time for %s to %s: %v\n\n", r.Method, r.URL.Path, duration)
+		app.infoLog.Printf("Execution time for %s to %s: %v", r.Method, r.URL.Path, duration)
 	})
 }
 

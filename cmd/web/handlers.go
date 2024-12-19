@@ -51,7 +51,11 @@ func (app *application) home(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	app.writeHTML(w, nil, "home.page.tmpl")
+	data := map[string]string{
+		"title":       "Titolo h1",
+		"description": "descrizione",
+	}
+	app.writeHTML(w, data, "home.page.tmpl")
 }
 
 func (app *application) about(w http.ResponseWriter, r *http.Request) {

@@ -34,7 +34,6 @@ func (app *application) writeHTML(w http.ResponseWriter, data any, name string) 
 	// execute template set
 	if err := ts.Execute(mw, data); err != nil {
 		app.serverError(w, err)
-		return
 	}
 }
 
