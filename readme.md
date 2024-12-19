@@ -20,5 +20,5 @@ this command will start watcher for static files (css,js,tmpl) and send ping to 
 WS client is inside the file `ui/static/js/dev-watch.js` this file is included in layout base (remove it on production)
 
 ### Structure
-cmd folder contain applications
+cmd folder contain applications  
 pkg folder contain code non-specific application (reusable in other applications)
