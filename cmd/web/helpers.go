@@ -130,7 +130,7 @@ func (app *application) serverError(w http.ResponseWriter, err error) {
 	trace := fmt.Sprintf("%s\n%s", err.Error(), debug.Stack())
 	app.errorLog.Println(trace)
 	app.writeJSON(w, http.StatusInternalServerError, map[string]string{
-		"message": http.StatusText(http.StatusInternalServerError),
+		"message": err.Error(),
 	})
 }
 

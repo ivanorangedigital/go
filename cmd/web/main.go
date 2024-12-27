@@ -3,6 +3,7 @@ package main
 import (
 	"database/sql"
 	"digitalcorporation/pkg/models/mysql"
+	"digitalcorporation/pkg/services"
 	"flag"
 	"fmt"
 	"html/template"
@@ -19,7 +20,7 @@ import (
 	"github.com/tdewolff/minify/v2/js"
 )
 
-type constants struct {
+type _constants struct {
 	// env
 	envJwtSecret    string
 	envCookieSecret string
@@ -31,13 +32,22 @@ type constants struct {
 	contextUserID string
 }
 
+type _services struct {
+	imageUploader *services.ImageUploader
+}
+
+type _models struct {
+	userModel *mysql.UserModel
+}
+
 type application struct {
 	infoLog       *log.Logger
 	errorLog      *log.Logger
-	constants     *constants
+	constants     *_constants
+	services      *_services
+	models        *_models
 	templateCache map[string]*template.Template
 	minifyWriter  func(mediatype string, w io.Writer) io.WriteCloser
-	userModel     *mysql.UserModel
 }
 
 func main() {
@@ -68,7 +78,7 @@ func main() {
 	// ---
 
 	// set constants for applictaion
-	constants := &constants{
+	constants := &_constants{
 		// env
 		envJwtSecret:    os.Getenv("JWT_SECRET"),
 		envCookieSecret: os.Getenv("COOKIE_SECRET"),
@@ -78,6 +88,22 @@ func main() {
 
 		// context
 		contextUserID: "USER_ID",
+	}
+
+	// set services for application
+	services := &_services{
+		imageUploader: &services.ImageUploader{
+			RootDir:           "./ui/static/img/",
+			PrefixRequest:     "/img/",
+			MaxLength:         2,
+			MaxSizeFile:       2 << 20,
+			AllowedExtensions: []string{"png"},
+		},
+	}
+
+	// set models for application
+	models := &_models{
+		userModel: &mysql.UserModel{DB: db},
 	}
 
 	// set cached templates
@@ -97,9 +123,10 @@ func main() {
 		infoLog:       infoLog,
 		errorLog:      errorLog,
 		constants:     constants,
+		services:      services,
+		models:        models,
 		templateCache: templateCache,
 		minifyWriter:  m.Writer,
-		userModel:     &mysql.UserModel{DB: db},
 	}
 
 	// create server

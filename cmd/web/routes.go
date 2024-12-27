@@ -33,7 +33,6 @@ func (app *application) routes() http.Handler {
 
 	// endpoints
 	registerRoute("/", app.home)
-	registerRoute("/about", app.about)
 	registerRoute("/auth", app.auth, app.authMiddleware)
 
 	// set handler for every route and middlewares if any

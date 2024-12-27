@@ -32,16 +32,18 @@ func ReadFile(filePath string) ([]byte, error) {
 	for {
 		bytesReaded, err := f.Read(buffer)
 
+		if bytesReaded > 0 {
+			bytes = append(bytes, buffer[:bytesReaded]...)
+		}
+
 		if err != nil {
 			// readed all file
 			if err == io.EOF {
 				break
 			}
 
-			return bytes, err
+			return nil, err
 		}
-
-		bytes = append(bytes, buffer[:bytesReaded]...)
 	}
 
 	return bytes, nil

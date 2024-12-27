@@ -51,15 +51,13 @@ func (app *application) home(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	data := map[string]string{
-		"title":       "Titolo h1",
-		"description": "descrizione",
+	res, err := app.services.imageUploader.Upload(r, "files")
+	if err != nil {
+		app.serverError(w, err)
+		return
 	}
-	app.writeHTML(w, data, "home.page.tmpl")
-}
 
-func (app *application) about(w http.ResponseWriter, r *http.Request) {
-	app.writeHTML(w, nil, "about.page.tmpl")
+	app.writeJSON(w, http.StatusCreated, res)
 }
 
 func (app *application) auth(w http.ResponseWriter, r *http.Request) {
