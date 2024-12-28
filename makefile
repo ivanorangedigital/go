@@ -2,6 +2,9 @@ port=3000
 wsPort=4000
 wsServer=dev-ws-server/server.js
 
+start:
+	gcc dev.c -o dev && ./dev
+
 start-websocket-server:
 	node $(wsServer)
 watch-websocket-ping:
