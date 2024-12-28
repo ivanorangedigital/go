@@ -5,6 +5,7 @@ import (
 	"log"
 	"net/http"
 	// -- handlers
+	_ "digitalcorporation/cmd/web2/handlers/about"
 	_ "digitalcorporation/cmd/web2/handlers/home"
 	// -- end handlers
 )

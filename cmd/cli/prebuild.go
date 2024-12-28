@@ -7,17 +7,23 @@ import (
 	"io"
 	"log"
 	"os"
+	"path"
 )
 
-var startFlag = "// -- handlers"
-var endFlag = "// -- end handlers"
+var (
+	startFlag   = "// -- handlers"
+	endFlag     = "// -- end handlers"
+	filePath    = "./cmd/web2/main.go"
+	dirToWatch  = "./cmd/web2/handlers"
+	projectName = "digitalcorporation"
+)
 
 func base(name string) string {
-	return fmt.Sprintf("_ \"digitalcorporation/cmd/web2/handlers/%s\"", name)
+	return fmt.Sprintf("_ \"%s/%s\"", path.Join(projectName, dirToWatch), name)
 }
 
 func main() {
-	file, err := os.Open("./cmd/web2/main.go")
+	file, err := os.Open(filePath)
 	if err != nil {
 		log.Fatal(err)
 	}
@@ -43,22 +49,22 @@ func main() {
 	// detect line '// -- handlers'
 	indexStart := bytes.Index(bts, []byte(startFlag))
 	if indexStart == -1 {
-		log.Fatal(errors.New("Unable to find '// -- handlers' flag"))
+		log.Fatal(errors.New(fmt.Sprintf("Unable to find '%s' flag", startFlag)))
 	}
 
 	// detect line '// -- end handlers'
 	indexEnd := bytes.Index(bts, []byte(endFlag))
 	if indexEnd == -1 {
-		log.Fatal(errors.New("Unable to find '// -- end handlers' flag"))
+		log.Fatal(errors.New(fmt.Sprintf("Unable to find '%s' flag", endFlag)))
 	}
 
-	dirs, err := os.ReadDir("./cmd/web2/handlers")
+	dirs, err := os.ReadDir(dirToWatch)
 	if err != nil {
 		log.Fatal(err)
 	}
 
 	newFile := []byte{}
-	newFile = append(newFile, bts[:indexStart+len(startFlag)]...)
+	newFile = append(newFile, bts[:indexStart+len(startFlag)+len("\n")]...)
 
 	for _, dir := range dirs {
 		if !dir.IsDir() {
@@ -66,7 +72,7 @@ func main() {
 		}
 
 		// append import
-		newFile = append(newFile, []byte("\n\t"+base(dir.Name())+"\n")...)
+		newFile = append(newFile, []byte("\t"+base(dir.Name())+"\n")...)
 	}
 
 	// append rest of file
@@ -74,7 +80,7 @@ func main() {
 
 	// close file and reopen with truncate and rdw method
 	file.Close()
-	file, err = os.OpenFile("./cmd/web2/main.go", os.O_RDWR|os.O_TRUNC, os.ModePerm)
+	file, err = os.OpenFile(filePath, os.O_RDWR|os.O_TRUNC, os.ModePerm)
 	if err != nil {
 		log.Fatal(err)
 	}

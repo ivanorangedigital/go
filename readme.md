@@ -4,6 +4,7 @@
 
 1. watchexec
 2. nc
+3. websocat
 
 install them with your favorite package manager and enjoy
 

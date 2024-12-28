@@ -51,6 +51,12 @@ func (app *application) home(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
+	app.writeHTML(w, nil, "home.page.tmpl")
+	return
+
+	app.writeJSON(w, http.StatusOK, map[string]string{"message": "ivannn"})
+	return
+
 	res, err := app.services.imageUploader.Upload(r, "files")
 	if err != nil {
 		app.serverError(w, err)
