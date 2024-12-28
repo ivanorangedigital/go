@@ -4,9 +4,9 @@ import (
 	"digitalcorporation/cmd/web2/handlers"
 	"log"
 	"net/http"
-
-	// handlers
+	// -- handlers
 	_ "digitalcorporation/cmd/web2/handlers/home"
+	// -- end handlers
 )
 
 func main() {
