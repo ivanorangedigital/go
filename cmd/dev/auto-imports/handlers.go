@@ -1,3 +1,4 @@
+// this file watch [x] dir and from them auto import the defined handlers in main
 package main
 
 import (
@@ -11,11 +12,12 @@ import (
 )
 
 var (
-	startFlag   = "// -- handlers"
-	endFlag     = "// -- end handlers"
-	filePath    = "./cmd/web2/main.go"
-	dirToWatch  = "./cmd/web2/handlers"
-	projectName = "digitalcorporation"
+	startFlag       = "// -- handlers"
+	endFlag         = "// -- end handlers"
+	applicationRoot = "cmd/web2/"
+	entryFile       = applicationRoot + "main.go"
+	dirToWatch      = applicationRoot + "handlers"
+	projectName     = "digitalcorporation"
 )
 
 func base(name string) string {
@@ -23,27 +25,16 @@ func base(name string) string {
 }
 
 func main() {
-	file, err := os.Open(filePath)
+	// open file
+	file, err := os.Open(entryFile)
 	if err != nil {
 		log.Fatal(err)
 	}
 
-	buffer := make([]byte, 1024)
-	bts := []byte{}
-
-	// file reader
-	for {
-		readedBytes, err := file.Read(buffer)
-		if readedBytes > 0 {
-			bts = append(bts, buffer[:readedBytes]...)
-		}
-		if err != nil {
-			if err == io.EOF {
-				break
-			}
-
-			log.Fatal(err)
-		}
+	// read file
+	bts, err := io.ReadAll(file)
+	if err != nil {
+		log.Fatal(err)
 	}
 
 	// detect line '// -- handlers'
@@ -63,13 +54,16 @@ func main() {
 		log.Fatal(err)
 	}
 
-	newFile := []byte{}
-	newFile = append(newFile, bts[:indexStart+len(startFlag)+len("\n")]...)
+	// perform copy
+	newFile := make([]byte, len(bts[:indexStart+len(startFlag)+len("\n")]))
+	copy(newFile, bts[:indexStart+len(startFlag)+len("\n")])
 
 	for _, dir := range dirs {
 		if !dir.IsDir() {
 			continue
 		}
+
+		fmt.Println("package", dir.Name(), "(handler) imported")
 
 		// append import
 		newFile = append(newFile, []byte("\t"+base(dir.Name())+"\n")...)
@@ -80,7 +74,7 @@ func main() {
 
 	// close file and reopen with truncate and rdw method
 	file.Close()
-	file, err = os.OpenFile(filePath, os.O_RDWR|os.O_TRUNC, os.ModePerm)
+	file, err = os.OpenFile(entryFile, os.O_RDWR|os.O_TRUNC, os.ModePerm)
 	if err != nil {
 		log.Fatal(err)
 	}

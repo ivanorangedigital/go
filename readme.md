@@ -1,25 +1,16 @@
-# Dev Server
+# Folder cmd/dev/
+
+1. c-multi-process (manage multiple process, written in ./multi-process.txt)
+2. go-imports (go automatic imports, for now only handlers)
+3. js-ws (js websocket server)
 
 ## Requirements
 
 1. watchexec
 2. nc
 3. websocat
+4. gcc
+5. node
+6. go
 
-install them with your favorite package manager and enjoy
-
-## Run server.js
-run `npm start` inside `dev-ws-server` to start ws server for dev purposes
-
-## Run `make dev`
-this command will start go server with watcher for go and tmpl files (tmpl included because templates was cached)
-
-## Run `make ws`
-this command will start watcher for static files (css,js,tmpl) and send ping to reload page
-
-## WS client
-WS client is inside the file `ui/static/js/dev-watch.js` this file is included in layout base (remove it on production)
-
-## Structure
-1. cmd folder contain applications
-2. pkg folder contain code non-specific application (reusable in other applications)
+install them with your favorite package manager and enjoy with `make start`
