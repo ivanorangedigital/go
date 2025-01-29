@@ -1,17 +1,21 @@
-package main
+package middlewares
 
 import (
-	"context"
-	"digitalcorporation/pkg/utils"
 	"fmt"
 	"net/http"
 	"path"
 	"strings"
-	"time"
+	"sync"
 )
 
-// static resources middlewares
-func (app *application) staticResourcePathValidatorMiddleware(next http.Handler) http.Handler {
+var (
+	instance *middlewares
+	once     sync.Once
+)
+
+type middlewares struct{}
+
+func (m *middlewares) StaticResourcePathValidatorMiddleware(next http.Handler) http.Handler {
 	return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
 		// clean path and dot checker
 		cleanedPath := path.Clean(r.URL.Path[1:])
@@ -27,7 +31,7 @@ func (app *application) staticResourcePathValidatorMiddleware(next http.Handler)
 	})
 }
 
-func (app *application) staticResourceIsModifiedMiddleware(next http.Handler) http.Handler {
+func (m *middlewares) staticResourceIsModifiedMiddleware(next http.Handler) http.Handler {
 	return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
 		lastModified, err := utils.LastModifiedDateFile(r.URL.Path)
 		if err != nil {
@@ -54,7 +58,6 @@ func (app *application) staticResourceIsModifiedMiddleware(next http.Handler) ht
 	})
 }
 
-// logger middleware
 func (app *application) loggerMiddleware(next http.Handler) http.Handler {
 	return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
 		// request start
@@ -70,7 +73,6 @@ func (app *application) loggerMiddleware(next http.Handler) http.Handler {
 	})
 }
 
-// auth middleware
 func (app *application) authMiddleware(next http.Handler) http.Handler {
 	return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
 		app.infoLog.Println("Authentication start")
@@ -99,47 +101,9 @@ func (app *application) authMiddleware(next http.Handler) http.Handler {
 	})
 }
 
-// method middlewares
-func (app *application) getMiddleware(next http.Handler) http.Handler {
-	return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
-		if r.Method != http.MethodGet {
-			app.notFound(w)
-			return
-		}
-
-		next.ServeHTTP(w, r)
+func NewMiddlewares() *middlewares {
+	once.Do(func() {
+		instance = new(middlewares)
 	})
-}
-
-func (app *application) postMiddleware(next http.Handler) http.Handler {
-	return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
-		if r.Method != http.MethodPost {
-			app.notFound(w)
-			return
-		}
-
-		next.ServeHTTP(w, r)
-	})
-}
-
-func (app *application) putMiddleware(next http.Handler) http.Handler {
-	return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
-		if r.Method != http.MethodPut {
-			app.notFound(w)
-			return
-		}
-
-		next.ServeHTTP(w, r)
-	})
-}
-
-func (app *application) deleteMiddleware(next http.Handler) http.Handler {
-	return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
-		if r.Method != http.MethodDelete {
-			app.notFound(w)
-			return
-		}
-
-		next.ServeHTTP(w, r)
-	})
+	return instance
 }

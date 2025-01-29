@@ -32,7 +32,8 @@ func (app *application) routes() http.Handler {
 	registerRoute("/js/", app.js, app.staticResourcePathValidatorMiddleware, app.staticResourceIsModifiedMiddleware)
 
 	// endpoints
-	registerRoute("/", app.home)
+	registerRoute("/", app.home, app.getMiddleware)
+	registerRoute("/upload", app.uploadImage, app.postMiddleware)
 	registerRoute("/auth", app.auth, app.authMiddleware)
 
 	// set handler for every route and middlewares if any

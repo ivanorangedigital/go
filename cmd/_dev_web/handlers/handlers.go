@@ -1,28 +1,28 @@
 package handlers
 
 import (
-	"digitalcorporation/cmd/web2/helpers"
+	"digitalcorporation/cmd/web/helpers"
 	"errors"
 	"net/http"
 	"sync"
 )
 
 var (
-	instance *handler
+	instance *handlers
 	once     sync.Once
 )
 
-type handler struct {
+type handlers struct {
 	mux               *http.ServeMux
 	globalMiddlewares []func(http.Handler) http.Handler
 	mutex             sync.Mutex
 }
 
-func (h *handler) RegisterRoute(path string, handlerFunc http.HandlerFunc, middlewares ...func(http.Handler) http.Handler) {
-	h.mux.Handle(path, helpers.ChainMiddleware(handlerFunc, middlewares...))
+func (h *handlers) RegisterRoute(path string, handlerFunc http.HandlerFunc, middlewares ...func(http.Handler) http.Handler) {
+	h.mux.Handle(path, helpers.NewHelpers().ChainMiddleware(handlerFunc, middlewares...))
 }
 
-func (h *handler) SetGlobalMiddlewares(globalMiddlewares ...func(http.Handler) http.Handler) error {
+func (h *handlers) SetGlobalMiddlewares(globalMiddlewares ...func(http.Handler) http.Handler) error {
 	// protection for go concurrency
 	h.mutex.Lock()
 	defer h.mutex.Unlock()
@@ -37,14 +37,14 @@ func (h *handler) SetGlobalMiddlewares(globalMiddlewares ...func(http.Handler) h
 	return nil
 }
 
-func (h *handler) GetHandler() http.Handler {
-	return helpers.ChainMiddleware(h.mux, h.globalMiddlewares...)
+func (h *handlers) GetMainHandler() http.Handler {
+	return helpers.NewHelpers().ChainMiddleware(h.mux, h.globalMiddlewares...)
 }
 
 // singletone instance
-func NewHandler() *handler {
+func NewHandlers() *handlers {
 	once.Do(func() {
-		instance = &handler{
+		instance = &handlers{
 			mux: http.NewServeMux(),
 		}
 	})

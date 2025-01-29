@@ -14,7 +14,7 @@ import (
 var (
 	startFlag       = "// -- handlers"
 	endFlag         = "// -- end handlers"
-	applicationRoot = "cmd/web2/"
+	applicationRoot = "cmd/web/"
 	entryFile       = applicationRoot + "main.go"
 	dirToWatch      = applicationRoot + "handlers"
 	projectName     = "digitalcorporation"

@@ -1,4 +1,4 @@
 node cmd/dev/ws-server/server.js
-watchexec --restart -w cmd/web2/handlers -e go -- "go run cmd/dev/auto-imports/handlers.go"
-watchexec --restart -w . -e go,tmpl -- "go run cmd/web2/main.go"
+#watchexec --restart -w cmd/web/handlers -e go -- "go run cmd/dev/auto-imports/handlers.go"
+watchexec --restart -w . -e go,tmpl -- "go run cmd/web/*"
 watchexec --restart -w . -e css,js,tmpl -- "until nc -z localhost 3000; do sleep 0.5; done && echo '' | websocat ws://localhost:4000"

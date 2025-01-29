@@ -12,13 +12,13 @@ type UserModel struct {
 	DB *sql.DB
 }
 
-func (m *UserModel) Insert() (int, error) {
+func (m *UserModel) InsertUser() (int, error) {
 	return 0, nil
 }
 
-func (m *UserModel) Get() {}
+func (m *UserModel) GetUser() {}
 
-func (m *UserModel) List() ([]*models.User, error) {
+func (m *UserModel) ListUsers() ([]*models.User, error) {
 	// initialize key and user slice
 	key := "sql_query:users"
 	users := []*models.User{}

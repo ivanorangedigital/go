@@ -45,18 +45,7 @@ func (app *application) img(w http.ResponseWriter, r *http.Request) {
 }
 
 // endpoints
-func (app *application) home(w http.ResponseWriter, r *http.Request) {
-	if r.URL.Path != "/" {
-		app.notFound(w)
-		return
-	}
-
-	app.writeHTML(w, nil, "home.page.tmpl")
-	return
-
-	app.writeJSON(w, http.StatusOK, map[string]string{"message": "ivannn"})
-	return
-
+func (app *application) uploadImage(w http.ResponseWriter, r *http.Request) {
 	res, err := app.services.imageUploader.Upload(r, "files")
 	if err != nil {
 		app.serverError(w, err)
@@ -64,6 +53,15 @@ func (app *application) home(w http.ResponseWriter, r *http.Request) {
 	}
 
 	app.writeJSON(w, http.StatusCreated, res)
+}
+
+func (app *application) home(w http.ResponseWriter, r *http.Request) {
+	if r.URL.Path != "/" {
+		app.notFound(w)
+		return
+	}
+
+	app.writeJSON(w, http.StatusOK, map[string]string{"message": "server developed by Digital"})
 }
 
 func (app *application) auth(w http.ResponseWriter, r *http.Request) {

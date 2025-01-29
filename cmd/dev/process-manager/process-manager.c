@@ -18,6 +18,9 @@ int main() {
   char line[LINE_LEN + 1];
   while (fgets(line, sizeof(line), fptr)) {
     // remove last char if it's new line char
+    char *first = line;
+    if (*first == '#')
+      continue;
     char *last = line + strlen(line) - 1;
     if (*last == '\n')
       *last = '\0';
@@ -41,9 +44,6 @@ int main() {
       pid = pids + ln;
     }
 
-    // sleep for 1 sec
-    sleep(1);
-
     // create fork
     *pid = fork();
 
@@ -55,6 +55,9 @@ int main() {
     }
 
     if (*pid == 0) {
+      // sleep for 1 sec
+      sleep(1);
+
       execl("/bin/bash", "bash", "-c", line, NULL);
 
       perror("Execution command was failed");
